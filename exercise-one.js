@@ -172,19 +172,61 @@ function problemE () {
    */
 
   // callback version
-  readFile('poem-one/stanza-03.txt', function (err, stanza3) {
-    console.log('-- E. callback version (stanza three) --');
-    if (err) return magenta(err);
-    blue(stanza3);
-    readFile('poem-one/wrong-file-name.txt', function (err2, stanza4) {
-      console.log('-- E. callback version (stanza four) --');
-      if (err2) return magenta(err2);
-      blue(stanza4);
-    });
-  });
+  // readFile('poem-one/stanza-03.txt', function (err, stanza3) {
+  //   console.log('-- E. callback version (stanza three) --');
+  //   if (err) return magenta(err);
+  //   blue(stanza3);
+  //   readFile('poem-one/wrong-file-name.txt', function (err2, stanza4) {
+  //     console.log('-- E. callback version (stanza four) --');
+  //     if (err2) return magenta(err2);
+  //     blue(stanza4);
+  //   });
+  // });
 
   // promise version
-  // ???
+  var path1 = 'poem-one/stanza-03.txt';
+  var path2 = 'poem-one/wrong-file-name.txt';
+  var results = [];
+  
+  //var prom1 = promisifiedReadFile(path1);
+  //var prom2 = promisifiedReadFile(path2);
+
+  // Promise.all([prom1, prom2]).then(function(success){
+  //   success.forEach(function(e, i){
+  //     if (success[i] === true && success[i+1] === true) {
+  //       blue(success[i]);
+  //     }
+  //   })
+  // }, function(err){
+  //   console.error(err);
+  // })
+
+  Promise.all([path1, path2]).then(function(success){
+    success.forEach(function(e, i){
+      results.push(success[i]);
+    })
+  }).catch(function(err){
+    results.forEach(function(e, i){
+      if (!promisifiedReadFile(arr[i])) {
+        console.error(err);
+      }
+    })
+  })
+
+  //   Promise.all([prom1, prom2]).then(function(success){
+  //     var arr = [];
+  //     success.forEach(function(e, i){
+  //       if (success[i]) {
+  //         arr.push(success[i]);
+  //       }
+  //       return arr;
+  //   })
+  // })
+  // .catch(function(err){
+  //   if(arr.length <= 1) {
+  //     console.error(err);
+  //   }
+  // })
 
 }
 
